@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/JQuery/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div align="center">
+<div>
+    手机号：<input id="telephone" type="tel" name="telephone"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="telephone_span"></span><br>
+    密码：<input id="userPassword" type="password" name="userPassword"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="userPassword_span"></span><br>
+    确认密码:<input id="confirmPassword" type="password" name="confirmPassword"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="confirmPassword_span"></span><br>
+    用户名：<input id="username" type="text" name="username" ><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="username_span"></span><br>
+    真实姓名：<input id="realname" type="text" name="realname"><br>
+     &emsp; &emsp;&emsp;&emsp;<span id="realname_span"></span><br>
+    性别：<input id="Male" type="radio" name="sex" value="男">男
+    &emsp; &emsp;&emsp;&emsp;<span id="Male_span"></span>
+          <input id="Female" type="radio" name="sex" value="女">女<br>
+    &emsp; &emsp;&emsp;&emsp;<span id="Female_span"></span><br>
+
+
+    邮箱：<input id="email" type="text" name="email"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="email_span"></span><br>
+
+    身份证号：<input id="ID" type="text" name="ID"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="ID_span"></span><br>
+    地址：<input id="address" type="text" name="address"><br>
+    &emsp; &emsp;&emsp;&emsp;<span id="address_span"></span><br>
+    <input type="submit" value="确认" id="sub" >
+    <a href="login.html">返回登录页面</a>
+</div>
+</div>
+</body>
+   <script>
+       $("#telephone").blur(function () {
+           var telephone = $("#telephone").val();
+           $.ajax({
+               type : "POST",
+               url : "/log/checkRegisterPhone",
+               // async : false,
+               dataType : "json",
+               data : {
+                   phone : $("#telephone").val()
+               },
+               success : function (data) {
+                   if(data.news=="fault"){
+                       $("#telephone_span").html("手机号已注册");
+                       return false;
+                   }
+                   if(data.news=="format"){
+                       $("#telephone_span").html("手机号格式错误");
+                   }else {
+                       $("#telephone_span").html("");
+                   }
+               }
+           });
+           // if(telephone==""){
+           //     $("#telephone_span").html("手机号不能为空");
+           //     return;
+           // }else{
+           //     $("#telephone_span").html("");
+           // }
+       });
+       $("#username").blur(function () {
+           var username = $("#username").val();
+           if(username==""){
+               $("#username_span").html("用户名不能为空");
+               return;
+           }else{
+               $("#username_span").html("");
+           }
+       });
+       $("#realname").blur(function () {
+           var realname = $("#realname").val();
+           if(realname==""){
+               $("#realname_span").html("真实姓名不能为空");
+               return;
+           }else{
+               $("#realname_span").html("");
+           }
+       });
+       $("#userPassword").blur(function () {
+           var userPassword = $("#userPassword").val();
+           var reg = /^[^\\s]{6,16}$/;
+           if(!reg.test(userPassword)){
+               $("#userPassword_span").html("密码格式为数字或字母6-16位");
+               return;
+           }else{
+               $("#userPassword_span").html("");
+           }
+       });
+       $("#confirmPassword").blur(function () {
+           var confirmPassword = $("#confirmPassword").val();
+           if(confirmPassword==""){
+               $("#confirmPassword_span").html("确认密码不能为空");
+               return;
+           }else{
+               $("#confirmPassword_span").html("");
+           }
+       });
+       $("#email").blur(function () {
+           var email = $("#email").val();
+           var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+           if(!reg.test(email)){
+               $("#email_span").html("邮箱格式不正确");
+               return;
+           }else{
+               $("#email_span").html("");
+           }
+       });
+
+       $("#ID").blur(function () {
+           var ID = $("#ID").val();
+           if(ID.length!=18){
+               $("#ID_span").html("身份号长度错误");
+               return;
+           }else{
+               $("#ID_span").html("");
+           }
+
+       });
+       $("#address").blur(function () {
+           var address = $("#address").val();
+           if(address==""){
+               $("#address_span").html("地址不能为空");
+               return;
+           }else{
+               $("#address_span").html("");
+           }
+       });
+
+
+       $("#sub").click(function () {
+           var username = $("#username").val();
+           var realname = $("#realname").val();
+           var userPassword = $("#userPassword").val();
+           var confirmPassword = $("#confirmPassword").val();
+           var email = $("#email").val();
+           var telephone = $("#telephone").val();
+           var ID = $("#ID").val();
+           var address = $("#address").val();
+           if(telephone==""){
+               $("#telephone_span").html("手机号不能为空");
+               return;
+           }
+           if(telephone.length!=11){
+               $("#telephone_span").html("手机号长度错误");
+               return;
+           }
+           if(userPassword==""){
+               $("#userPassword_span").html("密码不能为空");
+               return;
+           }
+           if(confirmPassword==""){
+               $("#confirmPassword_span").html("确认密码不能为空");
+               return;
+           }
+           if(confirmPassword!=userPassword){
+               $("#confirmPassword_span").html("两次密码不一致");
+               return;
+           }
+           if(username==""){
+               $("#username_span").html("用户名不能为空");
+               return;
+           }
+           if(realname==""){
+               $("#realname_span").html("真实姓名不能为空");
+               return;
+           }
+
+           // if((($("#Male").is(':checked'))||(($("#FemaleMale").is(':checked'))))){
+           //         $("#Male_span").html("性别不能为空");
+           //         return;
+           //     }
+           var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+           if(!reg.test(email)){
+               $("#email_span").html("邮箱格式不正确");
+               return;
+           }
+           if(ID.length!=18){
+               $("#ID_span").html("身份号长度错误");
+               return;
+           }
+           if(address==""){
+               $("#address_span").html("地址不能为空");
+               return;
+           }
+           var sexchecked;
+           if($("#Male").is(':checked')){
+               sexchecked = '男';
+           }else{
+               sexchecked = '女';
+           }
+           if($("#telephone_span").html()=="") {
+               $.ajax({
+                   type: "POST",
+                   url: "/user/addUser",
+                   dateType: "json",
+                   data: {
+                       username: $("#username").val(),
+                       realname: $("#realname").val(),
+                       sex: sexchecked,
+                       userPassword: $("#userPassword").val(),
+                       email: $("#email").val(),
+                       telephone: $("#telephone").val(),
+                       ID: $("#ID").val(),
+                       address: $("#address").val()
+                   }, success: function (data) {
+                       if (data.news == "success") {
+                           window.location.href = "registerSuccess.html";
+                       }
+                       if (data.news == "fault") {
+
+                       }
+                   },
+
+               });
+           }
+
+       });
+
+
+   </script>
+</html>

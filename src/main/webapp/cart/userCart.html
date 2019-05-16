@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+<table class="list" border="1" >
+
+    <tbody>
+    <tr>
+        <td align="center">图片</td>
+        <td>商品名称</td>
+        <td>商品价格</td>
+        <td>厂家</td>
+        <td>商品描述</td>
+        <td>商品数量</td>
+        <td>操作</td>
+    </tr>
+    #for(x : cartList)
+    <tr>
+        <td style="text-align:left;"><img src="/#(x.goodsImage)" width="200" height="100"></td>
+        <td style="text-align:left;">#(x.goodsName)</td>
+        <td style="text-align:left;">#(x.goodsPrice)</td>
+        <td style="text-align:left;">#(x.Manufacturename)</td>
+        <td style="text-align:left;">#(x.goodsDescription)</td>
+        <td style="text-align:left;">#(x.number)</td>
+        <td style="text-align:left;"><a href="/cart/deleteGoods/#(x.goods_id)">删除</a></td>
+        <td style="text-align:left;"><a href="/cart/buyGoods/#(x.goods_id)">购买</a></td>
+    </tr>
+    #end
+    </tbody>
+</table>
+</div>
+<div align="center">
+<a href="/goods">返回到商品页面</a>
+</div>
+</body>
+</html>

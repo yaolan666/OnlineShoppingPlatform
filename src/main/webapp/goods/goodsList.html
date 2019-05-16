@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/JQuery/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+<div align="center">
+欢迎！<a>#(username)</a>
+<br><br>
+<div>根据商品名称搜索：<input id="search" type="text" name="search" value="#(search)" >
+    <input id="submit" type="submit" value="搜索">
+</div>
+    <div align="right"><a href="/cart/queryUserCart">进入我的购物车</a></div>
+</div><br>
+<div align="center">
+<div class="table_box">
+    <table class="list" border="1" >
+
+        <tbody>
+        <tr>
+            <td align="center">图片</td>
+            <td>商品名称</td>
+            <td>商品价格</td>
+            <td>商品分类</td>
+            <td>厂家</td>
+            <td>商品描述</td>
+            <td>商品数量</td>
+            <td align="center">操作</td>
+        </tr>
+        #for(x : goodsPage.getList())
+        <tr>
+            <td style="text-align:left;"><img src="/#(x.goodsImage)" width="200" height="100"></td>
+            <td style="text-align:left;">#(x.goodsName)</td>
+            <td style="text-align:left;">#(x.goodsPrice)</td>
+            <td style="text-align:left;">#(x.goodsCategory)</td>
+            <td style="text-align:left;">#(x.Manufacturename)</td>
+            <td style="text-align:left;">#(x.goodsDescription)</td>
+            <td style="text-align:left;">#(x.number)</td>
+            <td><a href="/goods/deleteGoods/#(x.id)" onClick="return confirm('确认要删除？')">删除</a>
+                <a href="/goods/editGoods/#(x.id)">修改</a>
+                <a href="/cart/addGoodsToCart/#(x.id)">添加购物车</a></td>
+        </tr>
+        #end
+        </tbody>
+    </table>
+    #@paginate(goodsPage.pageNumber, goodsPage.totalPage, "/goods/","?search="+search)
+</div>
+</div>
+<br>
+<div align="center">
+<a href="/goods/addGoods.html">添加商品</a>
+<a href="/log/editPassword">修改密码</a>
+</div>
+</body>
+<script>
+    $("#submit").click(function () {
+        var search = $("#search").val();
+        window.location.href = "/goods?search="+search;
+    });
+</script>
+</html>

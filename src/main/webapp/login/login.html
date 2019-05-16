@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/JQuery/jquery-3.3.1.min.js"></script>
+<!--    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+
+</head>
+<body>
+<div align="center" id="data-form">
+    手机号：<input id="phone" type="text" name="telephone"><br>
+    <span id="phspan"><font color="red"></font></span><br>
+    密码：<input id="pass" type="password" name="userPassword"><br>
+    <span id="pspan"><font color="red"></font></span><br>
+    <input type="submit" value="登录" id="btn"><br>
+    <a href="register.html">没有账户去注册</a>
+
+</div>
+
+</body>
+<script>
+    $("#phone").blur(function () {
+        $.ajax({
+            type: "POST",
+            url: "/log/checkLoginPhone",
+            dataType: "json",
+            data: {
+                phone: $("#phone").val()
+            },
+            success: function (data) {
+                if (data.news == "noexist") {
+                    $("#phspan").html("手机号不存在");
+                } else {
+                    $("#phspan").html("");
+                }
+            },
+        });
+    });
+    $("#btn").click(function () {
+        var phone = $("#phone").val();
+        var pass = $("#pass").val();
+        if (phone == "") {
+            $("#phspan").html("手机号不能为空");
+            return;
+        }
+        if (pass == "") {
+            $("#pspan").html("密码不能为空");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/log/checkLoginPassword",
+            dataType: "json",
+            data: {
+                phone: $("#phone").val(),
+                pass: $("#pass").val()
+            },
+            success: function (data) {
+                // alert(data)
+                if (data.news == "success") {
+                    window.location.href = "/goods";
+                } else {
+                    $("#pspan").html("密码输入错误");
+                }
+
+            },
+            error: function () {
+
+            },
+        });
+    });
+</script>
+</html>
