@@ -85,12 +85,12 @@ public class Test {
                     number = goods.getNumber();
                     System.out.println(number);
                     if (number < 0) {
-                        System.out.println("商品数量已经为0了");
-                        System.out.println(number);
-                        String sql_cart_end_record = new Cart().dao().getSql("update_cart_end_record");
-                        Db.update(sql_cart_end_record);
-                        String update_goods_end_number = new Goods().dao().getSql("update_goods_end_number");
-                        Db.update(update_goods_end_number,id);
+//                        System.out.println("商品数量已经为0了");
+//                        System.out.println(number);
+//                        String sql_cart_end_record = new Cart().dao().getSql("update_cart_end_record");
+//                        Db.update(sql_cart_end_record);
+//                        String update_goods_end_number = new Goods().dao().getSql("update_goods_end_number");
+//                        Db.update(update_goods_end_number,id);
                         return;
                     }
                 }

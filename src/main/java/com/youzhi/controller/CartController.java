@@ -26,12 +26,12 @@ public class CartController extends Controller {
 //        根据商品表中的商品数量
         String sql1 = dao.getSql("update_goods_nummber_byid");
         Db.update(sql1, number, id);
-//        查询购物车中此用户拥有该商品的数量
 
         //根据用户的手机号获取用户的id
         String sql_select_user_id = new User().dao().getSql("select_user_id_byphone");
         User user = new User().dao().findFirst(sql_select_user_id, phone);
         long u_id = user.getUserID();
+//        查询购物车中此用户拥有该商品的数量
 
         String sql__select_cart_number = new Cart().dao().getSql("selectcartgoods_nummber");
         Cart cart = new Cart().dao().findFirst(sql__select_cart_number, id, u_id);
@@ -51,7 +51,6 @@ public class CartController extends Controller {
 //            String sql2 = new Cart().dao().getSql("insert_cart_bygoodsid");
 //            Db.save("cart",phone,id,cart_number);
         }
-//        购物车表中商品数量加一
 
         redirect("/goods");
 
