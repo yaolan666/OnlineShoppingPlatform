@@ -5,13 +5,16 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.redis.Redis;
 import com.youzhi.constant.TimeUtil;
 import com.youzhi.model.Cart;
 import com.youzhi.model.Goods;
 import com.youzhi.model.User;
 import com.youzhi.model._MappingKit;
+import redis.clients.jedis.Jedis;
 
 import javax.sql.DataSource;
+import java.util.UUID;
 
 public class Test01 {
     static {
@@ -60,26 +63,37 @@ public class Test01 {
     Integer id = 1;
 
     public synchronized void test(String phone) {
+        UUID uu_id = UUID.randomUUID();
         for (int i = 0; ; i++) {
-            String sql = new Goods().dao().getSql("selectgoods_byid");
-            Goods goods = new Goods().dao().findFirst(sql, id);
-            Integer number = goods.getNumber();
-
-            if (number >= 0) {
-                System.out.println(number);
-                number--;
-            }
-            if (number <= -1) {
-                System.out.println(number);
-                System.out.println("商品数量已经为0了");
-                return;
-            }
-            String sql1 = new Goods().dao().getSql("update_goods_nummber_byid");
-            Db.update(sql1, number, id);
-            System.out.println("更新商品表完毕");
             String sql_select_user_id = new User().dao().getSql("select_user_id_byphone");
             User user = new User().dao().findFirst(sql_select_user_id, phone);
             long u_id = user.getUserID();
+            String sql = new Goods().dao().getSql("selectgoods_byid");
+            Goods goods = new Goods().dao().findFirst(sql, id);
+            Integer number = goods.getNumber();
+            Jedis userCache = Redis.use("onlineShopPlatform").getJedis();
+            userCache.set(id.toString(), number.toString());
+            boolean b = RedisTool.tryGetDistributedLock(userCache, id.toString(), uu_id.toString(), 5);
+            userCache.connect();
+            if (b) {
+                if (Integer.parseInt(userCache.get(id.toString())) >= 0) {
+                    System.out.println(number);
+                    userCache.decr(id.toString());
+                }
+                if (Integer.parseInt(userCache.get(id.toString())) <= -1) {
+                    System.out.println(number);
+                    System.out.println("商品数量已经为0了");
+                    return;
+                }
+            } else {
+                return;
+            }
+
+
+            String sql1 = new Goods().dao().getSql("update_goods_nummber_byid");
+            Db.update(sql1, userCache.get(id.toString()), id);
+            System.out.println("更新商品表完毕");
+
 
             String sql__select_cart_number = new Cart().dao().getSql("selectcartgoods_nummber");
             Cart cart = new Cart().dao().findFirst(sql__select_cart_number, id, u_id);
@@ -98,6 +112,7 @@ public class Test01 {
                 Db.update("cart", cart1);
                 System.out.println("添加已经有的商品完毕");
             }
+            RedisTool.releaseDistributedLock(userCache, id.toString(), uu_id.toString());
         }
     }
 }

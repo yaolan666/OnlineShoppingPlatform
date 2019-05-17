@@ -5,6 +5,8 @@ import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.redis.Redis;
+import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.template.Engine;
 import com.youzhi.controller.*;
 import com.youzhi.model._MappingKit;
@@ -38,6 +40,7 @@ public class UserConfig extends JFinalConfig {
         me.add("/goods", GoodsController.class);
         me.add("/cart", CartController.class);
         me.add("/test", TestController.class);
+        me.add("/re", RedisController.class);
     }
 
     @Override
@@ -57,6 +60,8 @@ public class UserConfig extends JFinalConfig {
         arp.addSqlTemplate("/sql/user.sql");
 //        arp.addSqlTemplate("/sql/goods.sql");
         me.add(arp);
+        RedisPlugin redisPlugin = new RedisPlugin("onlineShopPlatform","127.0.0.1",6379);
+        me.add(redisPlugin);
     }
 
     public static DruidPlugin createDruidPlugin() {
