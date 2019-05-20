@@ -85,6 +85,7 @@ public class Test01 {
 
         @Override
         public void run() {
+            System.out.println();
             Integer id = 1;
             String sql_select_user_id = new User().dao().getSql("select_user_id_byphone");
             User user = new User().dao().findFirst(sql_select_user_id, phone);
