@@ -12,7 +12,7 @@ import redis.clients.jedis.Jedis;
 import javax.sql.DataSource;
 import java.util.UUID;
 
-public class Test01 {
+public class TestRedisLock {
 
 
     static Integer number;
@@ -20,7 +20,7 @@ public class Test01 {
     static Jedis jedis;
 
     public static void main(String[] args) {
-        new Test01().launch();
+        new TestRedisLock().launch();
     }
 
     public void launch() {
@@ -41,13 +41,13 @@ public class Test01 {
 //        jedis = Redis.use("onlineShopPlatform").getJedis();
 //        new Thread(tt[0]).start();
         new Thread(tt[1]).start();
-//        new Thread(tt[2]).start();
-//        new Thread(tt[3]).start();
-//        new Thread(tt[4]).start();
-//        new Thread(tt[5]).start();
-//        new Thread(tt[6]).start();
-//        new Thread(tt[7]).start();
-//        new Thread(tt[8]).start();
+        new Thread(tt[2]).start();
+        new Thread(tt[3]).start();
+        new Thread(tt[4]).start();
+        new Thread(tt[5]).start();
+        new Thread(tt[6]).start();
+        new Thread(tt[7]).start();
+        new Thread(tt[8]).start();
 //        new Thread(tt[9]).start();
 //        new Thread(tt[10]).start();
 //        new Thread(tt[11]).start();
@@ -62,11 +62,6 @@ public class Test01 {
         DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
         druidPlugin.start();
         DataSource dataSource = druidPlugin.getDataSource();
-//        RedisPlugin redisPlugin = new RedisPlugin(PropKit.get("redis.cache"), PropKit.get("redis.host"), Integer.parseInt(PropKit.get("redis.port")), 1000 * 10);
-//        redisPlugin.getJedisPoolConfig().setMaxTotal(300);
-//        redisPlugin.getJedisPoolConfig().setMaxIdle(100);
-//        redisPlugin.getJedisPoolConfig().setMaxWaitMillis(1000);
-//        redisPlugin.start();
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         // 所有映射在 MappingKit 中自动化搞定
@@ -135,7 +130,7 @@ public class Test01 {
                                 RedisTool.releaseDistributedLock(jedis, "lock", uu_id);
                             }
                             try {
-                                Thread.sleep(3000);
+                                Thread.sleep(300);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
