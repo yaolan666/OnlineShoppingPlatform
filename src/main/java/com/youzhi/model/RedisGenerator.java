@@ -76,6 +76,8 @@ public final class RedisGenerator {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }finally {
+
         }
     }
 

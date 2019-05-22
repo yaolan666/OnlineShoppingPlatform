@@ -77,18 +77,17 @@ class TestThread implements Runnable {
         String uu_id = UUID.randomUUID().toString();
         boolean flag = RedisTool.tryGetDistributedLock(jedis, "lock", uu_id, 10000);
         if (flag) {
-            Integer number = Integer.parseInt(jedis.get(id + ""));
-            if (number > 0) {
+//            Integer number = Integer.parseInt(jedis.get(id + ""));
+//            if (number > 0) {
                 if (Integer.parseInt(jedis.get(id.toString())) > 0) {
-                    System.out.println("加锁之后的库存" + number);
+                    System.out.println("加锁之后的库存" + jedis.get(id.toString()));
                     jedis.decr(id + "");
 //                    number--;
                 } else {
-                    System.out.println(number);
+                    System.out.println(jedis.get(id.toString()));
                     System.out.println("商品数量已经为0了");
                     return;
                 }
-
                 RedisTool.releaseDistributedLock(jedis, "lock", uu_id);
                 RedisGenerator.returnResource(jedis);
                 String sql__select_cart_number = new Cart().dao().getSql("selectcartgoods_nummber");
@@ -108,11 +107,11 @@ class TestThread implements Runnable {
                     Db.update("cart", cart1);
                     System.out.println("添加已经有的商品完毕");
                 }
-            } else {
-                RedisGenerator.returnResource(jedis);
-                System.out.println("库存已没抢购结束");
-                return;
-            }
+//            } else {
+//                RedisGenerator.returnResource(jedis);
+//                System.out.println("库存已没抢购结束");
+//                return;
+//            }
             try {
                 Thread.sleep(1);
             } catch (InterruptedException ex) {
