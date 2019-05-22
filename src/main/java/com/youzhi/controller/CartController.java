@@ -56,6 +56,7 @@ public class CartController extends Controller {
 
     }
 
+    //查询用户的购物车
     public void queryUserCart() {
         String phone = getSessionAttr("loginPhone");
         String sql = new User().dao().getSql("select_user_id_byphone");

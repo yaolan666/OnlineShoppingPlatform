@@ -54,11 +54,11 @@ public class UserConfig extends JFinalConfig {
         // 配置 druid 数据库连接池插件
         DruidPlugin druidPlugin = new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password").trim());
         me.add(druidPlugin);
-        RedisPlugin redisPlugin = new RedisPlugin(p.get("redis.cache"),p.get("redis.host"),Integer.parseInt(p.get("redis.port")),1000);
-        redisPlugin.getJedisPoolConfig().setMaxTotal(30);
-        redisPlugin.getJedisPoolConfig().setMaxIdle(10);
-        redisPlugin.getJedisPoolConfig().setMaxWaitMillis(1000*1000);
-        me.add(redisPlugin);
+//        RedisPlugin redisPlugin = new RedisPlugin(p.get("redis.cache"),p.get("redis.host"),Integer.parseInt(p.get("redis.port")),1000);
+//        redisPlugin.getJedisPoolConfig().setMaxTotal(30);
+//        redisPlugin.getJedisPoolConfig().setMaxIdle(10);
+//        redisPlugin.getJedisPoolConfig().setMaxWaitMillis(1000*1000);
+//        me.add(redisPlugin);
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         // 所有映射在 MappingKit 中自动化搞定

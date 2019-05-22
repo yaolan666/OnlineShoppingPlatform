@@ -127,7 +127,7 @@ public class TestRedisLock {
                             }
                             System.out.println(uu_id + " unlock ");
                             if (flag) {
-                                RedisTool.releaseDistributedLock(jedis, "lock", uu_id);
+                                RedisTool.releaseDistributedLock(jedis, "lock_sun", uu_id);
                             }
                             try {
                                 Thread.sleep(300);

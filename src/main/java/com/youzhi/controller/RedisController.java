@@ -1,7 +1,6 @@
 package com.youzhi.controller;
 
 import com.jfinal.core.Controller;
-import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
 import redis.clients.jedis.Jedis;
 

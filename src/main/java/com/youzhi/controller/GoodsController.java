@@ -27,7 +27,7 @@ public class GoodsController extends Controller {
     private Goods dao = new Goods().dao();
     @Inject
     GoodService service;
-
+   //查询商品
     public void index() {
 //        setAttr("goodsPage", service.paginate(getParaToInt(0, 1), 3));
 //        render("goodsList.html");
@@ -42,6 +42,7 @@ public class GoodsController extends Controller {
         render("goodsList.html");
     }
 
+    //修改商品
     @Clear
     public void editGoods() {
         setAttr("goods", service.findById(getParaToInt()));

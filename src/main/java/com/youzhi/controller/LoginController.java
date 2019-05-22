@@ -64,6 +64,7 @@ public class LoginController extends Controller {
             renderJson("s","success");
         }
     }
+    //修改密码
     public void editPassword() {
         String phone = getSessionAttr("loginPhone");
 
@@ -71,6 +72,7 @@ public class LoginController extends Controller {
         setAttr("phone", phone);
         render("/login/editPassword.html");
     }
+    //检查注册的手机号是否已经注册
     public void checkRegisterPhone(){
         String phone = getPara("phone");
         if(CheckPhoneUtil.phoneValidate(phone)){
