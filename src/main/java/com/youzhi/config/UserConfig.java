@@ -4,11 +4,13 @@ import com.jfinal.config.*;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.template.Engine;
+import com.youzhi.Task.RedisTask;
 import com.youzhi.controller.*;
 import com.youzhi.model._MappingKit;
 //import com.youzhi.Interceptor.SessionInViewInterceptor;
@@ -54,11 +56,10 @@ public class UserConfig extends JFinalConfig {
         // 配置 druid 数据库连接池插件
         DruidPlugin druidPlugin = new DruidPlugin(p.get("jdbcUrl"), p.get("user"), p.get("password").trim());
         me.add(druidPlugin);
-//        RedisPlugin redisPlugin = new RedisPlugin(p.get("redis.cache"),p.get("redis.host"),Integer.parseInt(p.get("redis.port")),1000);
-//        redisPlugin.getJedisPoolConfig().setMaxTotal(30);
-//        redisPlugin.getJedisPoolConfig().setMaxIdle(10);
-//        redisPlugin.getJedisPoolConfig().setMaxWaitMillis(1000*1000);
-//        me.add(redisPlugin);
+        //定时任务把数据库中的数据刷到Redis中
+        Cron4jPlugin cp = new Cron4jPlugin();
+        cp.addTask("0-59/1 * * * *",new RedisTask());
+        me.add(cp);
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         // 所有映射在 MappingKit 中自动化搞定
