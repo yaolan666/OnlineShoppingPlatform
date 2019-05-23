@@ -8,6 +8,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
+import com.youzhi.Interceptor.SessionInterceptor;
 import com.youzhi.constant.DateUtil;
 import com.youzhi.constant.TimeUtil;
 import com.youzhi.model.Cart;
@@ -83,6 +84,7 @@ public class GoodsController extends Controller {
 
     @Clear
     public void addGoods() throws ParseException {
+        RedisController.getMySQlDataToRedis();
         UploadFile file = getFile();
 //        String goodsName = getPara("goodsName");
 //        String goodsPrice = getPara("goodsPrice");

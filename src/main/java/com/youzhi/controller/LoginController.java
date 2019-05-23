@@ -98,4 +98,10 @@ public class LoginController extends Controller {
         Db.update(sql,new_password,phone);
         renderJson("s", "success");
     }
+    //注销的方法
+    public void logout(){
+        removeSessionAttr("loginPhone");
+        removeSessionAttr("loginUserName");
+        redirect("/index/index.html");
+    }
 }

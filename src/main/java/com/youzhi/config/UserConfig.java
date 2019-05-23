@@ -10,6 +10,7 @@ import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.template.Engine;
+import com.youzhi.Interceptor.SessionInterceptor;
 import com.youzhi.Task.RedisTask;
 import com.youzhi.controller.*;
 import com.youzhi.model._MappingKit;
@@ -65,7 +66,6 @@ public class UserConfig extends JFinalConfig {
         // 所有映射在 MappingKit 中自动化搞定
         _MappingKit.mapping(arp);
         arp.addSqlTemplate("/sql/user.sql");
-//        arp.addSqlTemplate("/sql/goods.sql");
         me.add(arp);
 
     }
@@ -78,7 +78,7 @@ public class UserConfig extends JFinalConfig {
     @Override
     public void configInterceptor(Interceptors me) {
 
-//        me.add(new SessionInViewInterceptor());
+        me.add(new SessionInterceptor());
     }
 
     @Override

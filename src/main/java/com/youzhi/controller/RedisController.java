@@ -34,7 +34,7 @@ public class RedisController extends Controller {
     }
 
     //活动结束后把redis中的数据刷回到数据库中
-    public static void getReidsDataToMySQL() {
+    public static void putReidsDataToMySQL() {
 //        GoodService goodService = new GoodService();
         Jedis jedis = RedisGenerator.getJedis();
         Set s = jedis.keys("*");
