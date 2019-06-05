@@ -20,11 +20,11 @@ public class TestRedisLockSuccessNoSyn {
             tt[i] = new TestThread("188460801" + (i + 17));
         }
         for (int i = 0; i < 34; i++) {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(700);
+//            } catch (InterruptedException ex) {
+//                ex.printStackTrace();
+//            }
             new Thread(tt[i]).start();
         }
 //        new Thread(tt[1]).start();
@@ -68,7 +68,6 @@ class TestThread implements Runnable {
     @Override
     public void run() {
         while (true) {
-
             test();
         }
     }

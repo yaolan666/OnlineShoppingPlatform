@@ -1,5 +1,6 @@
 package com.youzhi.controller;
 
+import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.youzhi.constant.CheckPhoneUtil;
@@ -7,7 +8,7 @@ import com.youzhi.constant.Md5Util;
 import com.youzhi.model.User;
 
 import java.util.List;
-
+@Clear
 public class LoginController extends Controller {
     private User dao = new User().dao();
 

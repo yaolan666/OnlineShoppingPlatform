@@ -20,6 +20,23 @@
     </properties>
 
     <dependencies>
+        <!-- jfinal邮件插件 -->
+        <dependency>
+            <groupId>cn.fsdev</groupId>
+            <artifactId>jfinal-mail-plugin</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- jfinal-mailer -->
+        <dependency>
+            <groupId>cn.dreampie</groupId>
+            <artifactId>jfinal-mailer</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.7.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>it.sauronsoftware.cron4j</groupId>
@@ -81,6 +98,18 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.55</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 

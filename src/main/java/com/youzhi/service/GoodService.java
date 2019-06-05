@@ -36,8 +36,8 @@ public class GoodService {
         List<Record> IdAndNumberList = Db.find("select id,number from goods");
         return IdAndNumberList;
     }
-//    public void updateNumberDatafromRedisToMySQL(String id,String number){
-//        Db.update("update goods set number=? where id=?",number,id);
-//    }
+    public void updateNumberDatafromRedisToMySQL(String id,String number){
+        Db.update("update goods set number=? where id=?",number,id);
+    }
 
 }

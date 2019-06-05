@@ -86,7 +86,6 @@ public class JFinalMain {
 //
 //    }
     public static void main(String[] args) {
-        RedisController.putReidsDataToMySQL();
 //        insertUser();
 //        deleteUser();
 //       seletUserList();

@@ -10,8 +10,9 @@ import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.template.Engine;
+import com.jfplugin.mail.MailPlugin;
 import com.youzhi.Interceptor.SessionInterceptor;
-import com.youzhi.Task.RedisTask;
+//import com.youzhi.Task.RedisTask;
 import com.youzhi.controller.*;
 import com.youzhi.model._MappingKit;
 //import com.youzhi.Interceptor.SessionInViewInterceptor;
@@ -45,6 +46,7 @@ public class UserConfig extends JFinalConfig {
         me.add("/cart", CartController.class);
         me.add("/test", TestController.class);
         me.add("/re", RedisController.class);
+        me.add("/mail", MailController.class);
     }
 
     @Override
@@ -59,8 +61,9 @@ public class UserConfig extends JFinalConfig {
         me.add(druidPlugin);
         //定时任务把数据库中的数据刷到Redis中
         Cron4jPlugin cp = new Cron4jPlugin();
-        cp.addTask("0-59/1 * * * *",new RedisTask());
+//        cp.addTask("0-59/1 * * * *",new RedisTask());
         me.add(cp);
+        me.add(new MailPlugin(PropKit.use("properties/mail.properties").getProperties()));
         // 配置ActiveRecord插件
         ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
         // 所有映射在 MappingKit 中自动化搞定
