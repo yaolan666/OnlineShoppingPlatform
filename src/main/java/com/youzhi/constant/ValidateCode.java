@@ -160,6 +160,7 @@ public class ValidateCode {
             String path="D:/"+new Date().getTime()+".png";
             System.out.println(vCode.getCode()+" >"+path);
             vCode.write(path);
+            System.out.println(vCode.getCode());
         } catch (IOException e) {
             e.printStackTrace();
         }
